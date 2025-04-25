@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class ATM {
+    private static double balance = 1000.00; // Initial balance
+    private static final String USERNAME = "user";
+    private static final String PASSWORD = "1234";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Login
+        System.out.println("====== Welcome to the ATM System ======");
+        System.out.print("Enter Username: ");
+        String inputUser = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String inputPass = scanner.nextLine();
+
+        if (inputUser.equals(USERNAME) && inputPass.equals(PASSWORD)) {
+            int choice;
+            do {
+                System.out.println("\n===== ATM MENU =====");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Exit");
+                System.out.print("Choose an option: ");
+                choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        checkBalance();
+                        break;
+                    case 2:
+                        deposit(scanner);
+                        break;
+                    case 3:
+                        withdraw(scanner);
+                        break;
+                    case 4:
+                        System.out.println("Thank you for using the ATM. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid option. Try again.");
+                }
+            } while (choice != 4);
+        } else {
+            System.out.println("Invalid username or password.");
+        }
+
+        scanner.close();
+    }
+
+    private static void checkBalance() {
+        System.out.printf("Your current balance is: Rs. %.2f%n", balance);
+    }
+
+    private static void deposit(Scanner scanner) {
+        System.out.print("Enter amount to deposit: Rs. ");
+        double amount = scanner.nextDouble();
+        if (amount > 0) {
+            balance += amount;
+            System.out.printf("Rs. %.2f deposited successfully.%n", amount);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    private static void withdraw(Scanner scanner) {
+        System.out.print("Enter amount to withdraw: Rs. ");
+        double amount = scanner.nextDouble();
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.printf("Rs. %.2f withdrawn successfully.%n", amount);
+        } else {
+            System.out.println("Insufficient balance or invalid amount.");
+        }
+    }
+}
